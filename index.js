@@ -136,7 +136,9 @@ async.parallel([getLocalSnapshots, getRemoteSnapshots], function(err, Snapshots)
         return _.contains(Snaps.toSyncNames, s.name.split('@')[1]);
     });
     Snaps.SyncCommands = Snaps.toSync.map(function(s) {
-        return 'zfs send -i ' + s.prevSnap + ' ' + s.name + ' | pv | ssh ' + remote + ' zfs recv -vF ' + remotePath + '/' + fs;
+if(s.prevSnap.length>0)
+s.prevSnap = ' -i ' + s.prevSnap; 
+        return 'zfs send ' + s.prevSnap + ' ' + s.name + ' | pv | ssh ' + remote + ' zfs recv -vF ' + remotePath + '/' + fs;
     });
     console.log(Snaps);
     if (err) throw err;
