@@ -81,7 +81,7 @@ var getLocalSnapshots = function(cb) {
      *           quota: '0',
      *
      * */
-    zfs.get('t/Rick', ['all'], [], function(e, i) {
+    zfs.get(fs, ['all'], [], function(e, i) {
         if (e) throw e;
  //       console.log(i);
     });
