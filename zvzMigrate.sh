@@ -1,4 +1,5 @@
 #!/bin/bash
+## git remote set-url origin https://binRick@github.com/binRick/zfsSyncFS
 Rsync='/usr/local/rsync/bin/rsync --numeric-ids --info=progress2 -ar'
 process=$3
 x=`echo $1 | cut -d"/" -f2`
