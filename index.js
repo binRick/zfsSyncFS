@@ -29,11 +29,8 @@ var normalizePoolVals = function(a, b) {
     return c;
 };
 
-<<<<<<< HEAD
 var remotePath = 'tank/Snapshots/' + local;
 
-var SnapFilter = function(l) {
-=======
 var allZfsFields = ['all'],
     customFields = [{
         field: '_backup_interval',
@@ -49,7 +46,6 @@ var SnapshotsParser = function(fs, cb) {
         return zfs.get(fs, zfsFields, [], cb);
     },
     SnapFilter = function(l) {
->>>>>>> 6403e23349306a564268e0b11b90bfce190f8f9c
         return l.name.split('@')[0] == fs;
     },
     RemoteSnapFilter = function(l) {
@@ -164,11 +160,7 @@ async.parallel([getLocalSnapshots, getRemoteSnapshots], function(err, Snapshots)
             console.log(JSON.stringify(Snaps))
         });
     });
-<<<<<<< HEAD
 
-    console.log(Snaps);
-    if (err) throw err;
+//    console.log(Snaps);
+//    if (err) throw err;
 });
-=======
-});
->>>>>>> 6403e23349306a564268e0b11b90bfce190f8f9c
