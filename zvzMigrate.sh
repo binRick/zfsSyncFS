@@ -1,4 +1,5 @@
 #!/bin/bash
+# vzlist -H -o private| grep ^/tank/[0-9].*[0-9]/private/[0-9].*[0-9]$ -v | cut -d'/' -f4| sort | uniq | xargs
 ## git remote set-url origin https://binRick@github.com/binRick/zfsSyncFS
 # vzlist -o private| grep ^/tank/[0-9].*[0-9]/private/[0-9].*[0-9]$^C
 
