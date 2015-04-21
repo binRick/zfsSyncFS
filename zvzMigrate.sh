@@ -12,11 +12,19 @@ me=$(hostname -s)
 ts=$(date +%s)
 cmdFile=/root/.zvzMigrate____${ts}
 
+
+zfs list $p/$x >/dev/null 2>/dev/null || zfs create $p/$x
+
+zfs set compression=on $p/$x && zfs set dedup=on $p/$x
+
 GB=`zfs get used $p/$x -H -o value| head -n 1`
 B=`zfs get used $p/$x -p -H -o value| head -n 1`
 dFreeGB=`zfs get available $rp -H -o value| head -n 1`
 dFreeB=`zfs get available $rp -p -H -o value| head -n 1`
 diffBytes=`echo "${dFreeB}-${B}" | bc`
+
+
+
 echo "" && echo "" && \
     echo -ne $COLOR_GREEN && echo "Copying FS $x of $GB GB to $d => $RP available: $dFreeGB " && echo ""  && echo "" && \
     echo "" && echo "" && \
