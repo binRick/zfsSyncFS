@@ -1,5 +1,6 @@
 #!/bin/bash
-# x=9899896; source /z/$x.conf && readlink $(dirname $VE_PRIVATE) >/dev/null && echo symlink
+
+
 #time for x in `zfs list -H -o name -s used | egrep -v "^tank/Snapshots.*|^bank/Snapshots.*" | egrep "^bank/[0-9]|^tank/[0-9]|^tank/vz.*|^bank/vz.*" `; do echo $x && time zfs get all $x | grep used && sleep 5 &&  time zfs-auto-snapshot -v $x && time SnapSyncSpecified.sh $x beo tank && time SnapSyncSpecified.sh $x iraq tank ; done
 # vzlist -H -o private| grep ^/tank/[0-9].*[0-9]/private/[0-9].*[0-9]$ -v | cut -d'/' -f4| sort | uniq | xargs
 ## git remote set-url origin https://binRick@github.com/binRick/zfsSyncFS
@@ -51,7 +52,7 @@ echo "#" && echo -ne $COLOR_GREEN && zfs list tank/$x && echo -ne $COLOG_RED && 
     && echo -ne $COLOR_RESET  &&  \
     cat << EOF > $cmdFile
 
-
+source /z/$x.conf && readlink \`dirname \$VE_PRIVATE\` >/dev/null && echo Fixing Private Symlink && export newPrivate=\`dirname \$VE_PRIVATE\`/private/$x && export newRoot=\`dirname \$VE_PRIVATE\`/root/$x && echo Setting Private From \${VE_PRIVATE}$x to \$newPrivate and Root from \${VE_ROOT}$x to \$newRoot && vzctl stop $x && sleep 2 && vzctl set $x --private \$newPrivate --root \$newRoot --diskquota no --save && sleep 2 && vzctl start $x
 
 vzlist -o private $x | grep "^/vz/private/$x" && ls /vz/private/$x/etc/passwd && \
 	mkdir /tank/$x/root -p && \
