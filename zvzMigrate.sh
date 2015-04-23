@@ -1,4 +1,5 @@
 #!/bin/bash
+# x=9899896; source /z/$x.conf && readlink $(dirname $VE_PRIVATE) >/dev/null && echo symlink
 #time for x in `zfs list -H -o name -s used | egrep -v "^tank/Snapshots.*|^bank/Snapshots.*" | egrep "^bank/[0-9]|^tank/[0-9]|^tank/vz.*|^bank/vz.*" `; do echo $x && time zfs get all $x | grep used && sleep 5 &&  time zfs-auto-snapshot -v $x && time SnapSyncSpecified.sh $x beo tank && time SnapSyncSpecified.sh $x iraq tank ; done
 # vzlist -H -o private| grep ^/tank/[0-9].*[0-9]/private/[0-9].*[0-9]$ -v | cut -d'/' -f4| sort | uniq | xargs
 ## git remote set-url origin https://binRick@github.com/binRick/zfsSyncFS
