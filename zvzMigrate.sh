@@ -96,7 +96,7 @@ if [ "$process" == "--migrate" ]; then
   echo -ne $COLOR_GREEN && echo "" && echo "" && echo "Migrating" && \
     echo "" && echo "" && \
     echo -ne $COLOR_RESET
-    echo $cmdFile
-    cat $cmdFile
+    time bash $cmdFile
     exit 0
+
 fi

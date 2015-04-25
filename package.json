@@ -27,6 +27,6 @@
     "time-ago": "^0.1.0",
     "underscore": "^1.8.3",
     "underscore.string": "^3.0.3",
-    "zfs": "git+https://github.com/joyent/node-zfs"
+    "zfs": "git://github.com/binRick/node-zfs.git"
   }
 }

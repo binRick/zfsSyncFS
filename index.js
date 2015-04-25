@@ -73,7 +73,9 @@ var getRemoteSnapshots = function(cb) {
             }).on('data', function(data) {
                 o.push(data);
             }).stderr.on('data', function(data) {
-                return cb(data, null);
+                o.push(data);
+//console.log(c.red('REMOTE STDERR'),  data.toString());
+//                return cb(data.toString(), null);
             });
         });
     }).connect({
@@ -111,6 +113,7 @@ var getLocalSnapshots = function(cb) {
 };
 
 async.parallel([getLocalSnapshots, getRemoteSnapshots], function(err, Snapshots) {
+        if(err)throw err;
     var Snaps = {};
     Snaps.Remote = Snapshots.filter(function(s) {
         return s.Type == 'Remote';
