@@ -62,9 +62,9 @@ vzlist -o private $x | grep "^/vz/private/$x" && ls /vz/private/$x/etc/passwd &&
 
 
 
-vzlist -o private $x | grep "^/vztank/private/$x" && ls /vztank/private/$x/etc/passwd && \
+vzlist -o private $x | grep "^/tank/vz/private/$x" && ls /tank/vz/private/$x/etc/passwd && \
 mkdir /tank/$x/root -p && \
-$Rsync /vztank/private/$x /tank/$x/private/ && vzctl stop $x && $Rsync /vztank/private/$x /tank/$x/private/ && vzctl set $x --diskquota no --private /tank/$x/private/$x --save --root /tank/$x/root --save && vzctl start $x && sleep 5 && vzctl exec $x ping 4.2.2.1 -c 1 | grep ' 0% loss'
+$Rsync /tank/vz/private/$x /tank/$x/private/ && vzctl stop $x && $Rsync /tank/vz/private/$x /tank/$x/private/ && vzctl set $x --diskquota no --private /tank/$x/private/$x --save --root /tank/$x/root --save && vzctl start $x && sleep 5 && vzctl exec $x ping 4.2.2.1 -c 1 | grep ' 0% loss'
 
 vzlist $x >/dev/null && $Rsync /z/$x.conf $d:/z/ >/dev/null && \
  ssh $d zfs list $p/$x 2>/dev/null && exit -1 || \
@@ -85,7 +85,6 @@ vzlist $x >/dev/null && $Rsync /z/$x.conf $d:/z/ >/dev/null && \
 
 echo -ne $COLOR_RED
 echo vzctl start $x
-echo ssh $d zfs rename $rp/$x $rp/Snapshots/$me/$p/$x 2>/dev/null >/dev/null
 echo -ne $COLOR_RESET
 
 EOF

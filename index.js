@@ -5,9 +5,8 @@ var pb = require('pretty-bytes'),
     ta = require('time-ago'),
     ago = require('ago'),
     POOL = 'tank',
-    moment = require('moment');
-
-var pj = require('prettyjson'),
+    moment = require('moment'),
+pj = require('prettyjson'),
     _ = require('underscore'),
     async = require('async'),
     c = require('chalk'),
@@ -64,7 +63,8 @@ var getRemoteSnapshots = function(cb) {
             var o = [];
             stream.on('close', function(code, signal) {
                 conn.end();
-                var J = JSON.parse(o.join(''));
+
+                var J = JSON.parse(o.join('')) || [];
                 var RemoteSnaps = J.filter(RemoteSnapFilter);
                 cb(null, {
                     Type: 'Remote',
@@ -74,8 +74,8 @@ var getRemoteSnapshots = function(cb) {
                 o.push(data);
             }).stderr.on('data', function(data) {
                 o.push(data);
-//console.log(c.red('REMOTE STDERR'),  data.toString());
-//                return cb(data.toString(), null);
+                //console.log(c.red('REMOTE STDERR'),  data.toString());
+                //                return cb(data.toString(), null);
             });
         });
     }).connect({
@@ -113,7 +113,7 @@ var getLocalSnapshots = function(cb) {
 };
 
 async.parallel([getLocalSnapshots, getRemoteSnapshots], function(err, Snapshots) {
-        if(err)throw err;
+    if (err) throw err;
     var Snaps = {};
     Snaps.Remote = Snapshots.filter(function(s) {
         return s.Type == 'Remote';
@@ -152,18 +152,20 @@ async.parallel([getLocalSnapshots, getRemoteSnapshots], function(err, Snapshots)
         SnapshotsParser(fs, function(e, lInfo) {
             if (e) throw e;
             Snaps.fsInfo.Local = lInfo[fs];
+            Snaps.fsInfo.Local.fs = fs;
+            CTID=0;
             Snaps.fsSummary = {
                 Bytes: Snaps.fsInfo.Local.used,
                 Size: pb(parseInt(Snaps.fsInfo.Local.used)),
                 Snapshots: Snaps.Local.length,
                 CreationTs: parseInt(Snaps.fsInfo.Local.creation),
                 Creation: moment.unix(Snaps.fsInfo.Local.creation),
-                CTID: '12345',
+                CTID: CTID,
             };
             console.log(JSON.stringify(Snaps))
         });
     });
 
-//    console.log(Snaps);
-//    if (err) throw err;
+    //    console.log(Snaps);
+    //    if (err) throw err;
 });
